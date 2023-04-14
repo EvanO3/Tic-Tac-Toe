@@ -1,0 +1,31 @@
+
+*{
+    margin:0px;
+    padding:0px;
+  }
+ 
+
+  #gameBoard-container{
+           display: grid;
+           grid-template-columns:repeat(3,6.7vw) ;
+           grid-template-rows: repeat(3, auto);
+          background-color:#fff;
+          border:7px solid #000;
+         width:495px;
+         height:495px;
+         margin:0px, auto;
+         box-sizing: border-box;
+         border-radius: 10px;
+
+
+  }
+
+  .cell{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size: 40px;
+    background-color: #eee;
+    border: 2px solid #000;
+  }
+  
