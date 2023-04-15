@@ -28,31 +28,17 @@ gameBoard.renderBoard(gameBoard.board);
 
 
 // running the game
-const gameControl = (() => {
-    // game control logic
-  
 
-
-    
-    const updateBoard = (marker, index) => {
-      gameBoard.getBoard()[index] = marker;
-    };
-  
-    return {  updateBoard };
-  })();
 
 // players object
 
 
+
 const Player =(name, marker) => {
-// selects all the cells and appends the players marker to it 
- const cell = document.querySelectorAll(".cell");
-  cell.forEach((cell, index) => {
-    cell.addEventListener("click", () => {
-      cell.innerHTML = getMarker();
-      gameControl.updateBoard(getMarker(), index);
-    });
-  });
+
+
+  
+
 
     const getName=()=>name;
     const getMarker =()=>marker;
@@ -60,11 +46,52 @@ const Player =(name, marker) => {
 };
 
 
-const Evan = Player('Evan', "X");
-const Jason = Player('Jason', "O")
+const player1 = Player('Evan', "X");
+const player2 = Player('Jason', "O")
 
 
-// Method that controls the game board
+
+// find a way to place markers on the board
 
 
+
+const gameControl = (() => {
+    // game control logic
+  let currentPlayer =player1;
+    const updateBoard = (marker, index) => {
+        gameBoard.board[index] = marker;
+        gameBoard.renderBoard(gameBoard.board);
+    };
+
+
+   function handleClick(){
+ 
+    const cellIndex = parseInt(this.getAttribute("data-index"));
+    //gets the marker for the current player and appends it to the clicks index
+    const marker = currentPlayer.getMarker();
+    gameBoard.board[cellIndex] = marker;
+    this.textContent = marker;
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
+    }
+// allows onlu 1 click on each cell
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => cell.addEventListener('click', handleClick, {once:true}));
+
+
+
+
+    
+
+
+
+   
+  
+    return {
+      // other methods here
+updateBoard
+      
+    }
+  
+    
+  })();
 
