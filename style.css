@@ -7,8 +7,8 @@
 
   #gameBoard-container{
            display: grid;
-           grid-template-columns:repeat(3,6.7vw) ;
-           grid-template-rows: repeat(3, auto);
+           grid-template-columns:repeat(3,1fr) ;
+           grid-template-rows: repeat(3, 1fr);
           background-color:#fff;
           border:7px solid #000;
          width:495px;
@@ -27,6 +27,7 @@
     font-size: 40px;
     background-color: #eee;
     border: 2px solid #000;
+    
   }
   
   .cell:hover{
