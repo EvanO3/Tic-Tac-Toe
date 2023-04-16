@@ -1,6 +1,6 @@
 const gameBoard = (function () {
-  //creates a game board with 9 clots
-  const board = ["", "", "", "", "", "", "", "", ""];
+  //creates a game board with 9 slots
+  const board = ["", "", "", "", "", "", "", "", "",""];
 
   const renderBoard = (board) => {
     const render = document.querySelectorAll(".cell");
@@ -35,24 +35,22 @@ const player2 = Player("Jason", "O");
 const gameControl = (() => {
   // game control logic
   let currentPlayer = player1;
-  const updateBoard = (marker, index) => {
-    gameBoard.board[index] = marker;
-    gameBoard.renderBoard(gameBoard.board);
+  const updateBoard = (board, marker, index) => {
+    board[index] = marker;
+    gameBoard.renderBoard(board);
   };
 
   function handleClick() {
-    const cellIndex = parseInt(this.getAttribute("data-index"));
-    //gets the marker for the current player and appends it to the clicks index
-    const marker = currentPlayer.getMarker();
-    gameBoard.board[cellIndex] = marker;
-    this.textContent = marker;
-
-    if (checkWinner(gameBoard.board, marker)) {
-      console.log(`${currentPlayer.getName()} won`);
-    } else {
-      currentPlayer = currentPlayer === player1 ? player2 : player1;
-    }
+const cellIndex = this.dataset.index;;
+  const marker = currentPlayer.getMarker();
+  gameControl.updateBoard(gameBoard.board,marker, cellIndex);
+  if (checkWinner(gameBoard.board, marker)) {
+    console.log(`${currentPlayer.getName()} won`);
+    resetGame();
+  } else {
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
   }
+}
   // allows only 1 click on each cell
   const cells = document.querySelectorAll(".cell");
   cells.forEach((cell) =>
@@ -81,6 +79,28 @@ const gameControl = (() => {
     }
     return false;
   }
+
+
+
+  function resetGame() {
+    // clear the board
+    gameBoard.board = ["", "", "", "", "", "", "", "", "",""];
+    gameBoard.renderBoard(gameBoard.board);
+
+    // remove event listeners
+    cells.forEach((cell) => {
+      cell.removeEventListener("click", handleClick);
+    });
+
+    // re-add event listeners
+    cells.forEach((cell) => {
+      cell.addEventListener("click", handleClick, { once: true });
+    });
+
+    // reset current player to player 1
+    currentPlayer = player1;
+  }
+
 
   return {
     // other methods here
